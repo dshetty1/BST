@@ -5,23 +5,19 @@
 #include <string.h>
 #include "bst.h"
 
-/*
- * Creates a new node on the bst and adds a word to it.
- * Parameters: Bst root node, Word to add
- * Return value: none
-*/
+// Creates a new node on the bst and adds a word to it.
 void add ( bst_node ** root, char * word ) {
+    // Checks if word was entered
     if (word == NULL){
         return;
     }
-
+    // Checks if tree is empty
     if (* root == NULL){
         * root = new_node(word);
         return;
     }
-
+    // Checks if word is smaller than root. If so, attempt to place word as left node
     if (strcmp((* root)->data, word) > 0){
-
         if((* root)->left == NULL){
             (* root)->left = new_node(word);
         }
@@ -30,7 +26,7 @@ void add ( bst_node ** root, char * word ) {
         }
 
     }
-
+    // Checks if word is larger than root. If so, attempt to place word as right node
     else if(strcmp((* root)->data, word) < 0){
         if((* root)->right == NULL){
             (* root)->right = new_node(word);
@@ -42,12 +38,7 @@ void add ( bst_node ** root, char * word ) {
     return;
 }
 
-/*
- * Function to traverse the bst in the inorder pattern.
- * Prints the data element in each node.
- * Parameters: bst root node
- * Return value: none
-*/
+// Traverses the bst in an inorder pattern and prints the data element in each node.
 void inorder ( bst_node * root ) {
     if (root != NULL)
     {
@@ -57,14 +48,9 @@ void inorder ( bst_node * root ) {
     }
 }
 
-
-/*
- * Function to remove the smallest element from the bst.
- * Traverses bst to find smallest furthest left, on lowest row, and removes it.
- * Parameters: bst root node
- * Return value: the smallest element (char)
-*/
+// Traverses bst to find smallest node (furthest left, on lowest row) and removes it.
 char * removeSmallest (bst_node ** root){
+    // Checks if root tree is empty
     if (* root == NULL)
         return NULL;
 
@@ -72,11 +58,13 @@ char * removeSmallest (bst_node ** root){
     bst_node * temp = * root;
     bst_node * parent = NULL;
 
+    // Identifies smallest node
     while(temp->left != NULL) {
         parent = temp;
         temp = temp->left;
     }
 
+    // Re-orient nodes to fit bst and return smallest node
     if(temp->right != NULL){
         if(temp == * root){
             min = temp->data;
@@ -112,13 +100,9 @@ char * removeSmallest (bst_node ** root){
 }
 
 
-/*
- * Function to remove the largest element from the bst.
- * Traverses bst to find largest furthest right, on lowest row, and removes it.
- * Parameters: bst root node
- * Return value: the largest element (char)
-*/
+// Traverses bst to find largest node (furthest right, on lowest row) and removes it.
 char * removeLargest (  bst_node ** root ){
+    // Checks if root tree is empty
     if (* root == NULL){
         return NULL;
     }
@@ -127,11 +111,13 @@ char * removeLargest (  bst_node ** root ){
     bst_node * temp = * root;
     bst_node * parent = NULL;
 
+    // Identifies largest node
     while (temp->right != NULL){
         parent = temp;
         temp = temp->right;
     }
 
+    // Re-orient nodes to fit bst and return largest node
     if (temp->left != NULL){
         if (temp == *root){
             largest = temp->data;
@@ -165,13 +151,9 @@ char * removeLargest (  bst_node ** root ){
     }
 }
 
-
-/*
- * Constructer to create a new node.
- * Parameters: input to be added
- * Return value: the newly created bst_node
-*/
+// Constructor to create a new node.
 bst_node * new_node(char * input){
+    // Allocate space for new node
     bst_node * node = (bst_node*)malloc(sizeof(bst_node));
 
     node->data = input;
